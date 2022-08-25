@@ -1,51 +1,53 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vendas
+namespace Atividade
 {
     class Vendedor
+{
+    private static int id;
+    private static string nome;
+    private static double percComissao;
+    private static List<Venda> asVendas = new List<Venda>();
+
+    #region Getter & Setters
+
+    public int Id { get => id; set => id = value; }
+    public string Nome { get => nome; set => nome = value; }
+    public double PercComissao { get => percComissao; set => percComissao = value; }
+    public List<Venda> AsVendas { get => asVendas; set => asVendas = value; }
+
+    #endregion
+
+    public void registrarVenda(Venda venda)
     {
-
-        public int id { get; private set; }
-        public string nome { get; private set; }
-        public double percComissao { get; private set; }
-
-        public Venda[] asVendas;
-
-
-        public void registraVenda(int dia, Venda venda)
+        if (AsVendas.Count < 31)
         {
+            AsVendas.Add(venda);
 
-
-
-
+            Console.WriteLine("Venda cadastrada");
         }
-
-        /*
-        public double valorVendas()
-        { 
-        
-
-            return 
-        
-        
-        }
-
-        public double valorComissao()
-        {
-
-
-            return
-
-
-
-        }*/
-
-
-
-
-
-
+        else
+            Console.WriteLine("Todos dias já foram cadastrados");
     }
+
+    public double valorVendas()
+    {
+        double ret = 0;
+
+        foreach (Venda item in AsVendas)
+        {
+            ret += item.Valor * item.Qtd;
+        }
+
+        return ret;
+    }
+
+    public double valorComissao()
+    {
+        return valorVendas() * PercComissao;
+    }
+}
 }
